@@ -1,0 +1,22 @@
+{
+  "name": "مطعم عسيب - Aseeb Restaurant",
+  "short_name": "عسيب - Aseeb",
+  "description": "الموقع الرسمي لمطعم عسيب وبوابة شركة ICON Code البرمجية",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#120e0d",
+  "theme_color": "#dc2626",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://picsum.photos/seed/aseebicon/192/192",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://picsum.photos/seed/aseebicon/512/512",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
