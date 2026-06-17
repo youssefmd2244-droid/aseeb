@@ -105,9 +105,7 @@ export default function App() {
               <span className="block text-sm font-black text-white tracking-tight font-sans">
                 {currentLang === "ar" ? "مطعم عسيب" : "Aseeb Restaurant"}
               </span>
-              <span className="block text-[9px] text-aseeb-gold/75 font-mono uppercase font-bold tracking-wider">
-                {currentLang === "ar" ? "تأسس ٢٠٢٣" : "EST. 2023"}
-              </span>
+
             </div>
           </a>
 
