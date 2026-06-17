@@ -1,72 +1,114 @@
-const CACHE_NAME = 'aseeb-restaurant-cache-v1';
-const ASSETS_TO_CACHE = [
+const CACHE_VERSION = 'v2';
+const STATIC_CACHE = `aseeb-static-${CACHE_VERSION}`;
+const IMAGE_CACHE = `aseeb-images-${CACHE_VERSION}`;
+const FONT_CACHE = `aseeb-fonts-${CACHE_VERSION}`;
+
+const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/src/main.tsx',
-  '/src/App.tsx',
-  '/src/index.css',
-  '/metadata.json',
-  '/manifest.json'
+  '/manifest.json',
 ];
 
-// Install Service Worker and pre-cache main shell files
+// Install: pre-cache static shell
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    }).then(() => {
-      return self.skipWaiting();
-    })
+    caches.open(STATIC_CACHE)
+      .then((cache) => cache.addAll(STATIC_ASSETS))
+      .then(() => self.skipWaiting())
   );
 });
 
-// Activate & remove old caches
+// Activate: clean old caches
 self.addEventListener('activate', (event) => {
+  const VALID = [STATIC_CACHE, IMAGE_CACHE, FONT_CACHE];
   event.waitUntil(
-    caches.keys().then((allCaches) => {
-      return Promise.all(
-        allCaches.map((name) => {
-          if (name !== CACHE_NAME) {
-            return caches.delete(name);
-          }
-        })
-      );
-    }).then(() => {
-      return self.clients.claim();
-    })
+    caches.keys().then((keys) =>
+      Promise.all(keys.filter(k => !VALID.includes(k)).map(k => caches.delete(k)))
+    ).then(() => self.clients.claim())
   );
 });
 
-// Intercept requests: Try network first, then cache
+function isImage(url) {
+  return /\.(jpe?g|png|gif|webp|svg|ico)(\?.*)?$/i.test(url);
+}
+
+function isFont(url) {
+  return /\.(woff2?|ttf|otf|eot)(\?.*)?$/i.test(url) || url.includes('fonts.googleapis') || url.includes('fonts.gstatic');
+}
+
+function isStatic(url) {
+  return /\.(js|css|json)(\?.*)?$/i.test(url);
+}
+
+// Cache-first for images & fonts, Network-first for everything else
 self.addEventListener('fetch', (event) => {
-  // Only handle HTTP/HTTPS, skip other schemes (e.g. chrome-extension, chrome-search)
-  if (!event.request.url.startsWith('http')) {
+  if (!event.request.url.startsWith('http')) return;
+  if (event.request.method !== 'GET') return;
+
+  const url = event.request.url;
+
+  // Images: Cache-first (fast loading + offline)
+  if (isImage(url)) {
+    event.respondWith(
+      caches.open(IMAGE_CACHE).then((cache) =>
+        cache.match(event.request).then((cached) => {
+          if (cached) return cached;
+          return fetch(event.request).then((res) => {
+            if (res.ok) cache.put(event.request, res.clone());
+            return res;
+          });
+        })
+      )
+    );
     return;
   }
 
+  // Fonts: Cache-first
+  if (isFont(url)) {
+    event.respondWith(
+      caches.open(FONT_CACHE).then((cache) =>
+        cache.match(event.request).then((cached) => {
+          if (cached) return cached;
+          return fetch(event.request).then((res) => {
+            if (res.ok) cache.put(event.request, res.clone());
+            return res;
+          });
+        })
+      )
+    );
+    return;
+  }
+
+  // JS/CSS: Cache-first with background update (Stale-While-Revalidate)
+  if (isStatic(url)) {
+    event.respondWith(
+      caches.open(STATIC_CACHE).then((cache) =>
+        cache.match(event.request).then((cached) => {
+          const fetchPromise = fetch(event.request).then((res) => {
+            if (res.ok) cache.put(event.request, res.clone());
+            return res;
+          });
+          return cached || fetchPromise;
+        })
+      )
+    );
+    return;
+  }
+
+  // HTML & API: Network-first, fallback to cache
   event.respondWith(
     fetch(event.request)
-      .then((networkResponse) => {
-        // Cache successful GET requests for offline use
-        if (networkResponse.status === 200 && event.request.method === 'GET') {
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
+      .then((res) => {
+        if (res.ok) {
+          const clone = res.clone();
+          caches.open(STATIC_CACHE).then((cache) => cache.put(event.request, clone));
         }
-        return networkResponse;
+        return res;
       })
-      .catch(() => {
-        // If network fails (OFFLINE), look for custom cached resource
-        return caches.match(event.request).then((cachedResponse) => {
-          if (cachedResponse) {
-            return cachedResponse;
-          }
-          // If seeking an HTML page and it's not cached, return the root cache
-          if (event.request.headers.get('accept').includes('text/html')) {
-            return caches.match('/');
-          }
-        });
-      })
+      .catch(() =>
+        caches.match(event.request).then((cached) =>
+          cached || caches.match('/')
+        )
+      )
   );
 });
