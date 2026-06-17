@@ -1,0 +1,6 @@
+{
+  "name": "Aseeb Restaurant",
+  "description": "The official high-end traditional Najdi restaurant website for Aseeb (مطعم عسيب), established with advanced interactive custom animations, localized Arabic/English support, and offline capabilities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
