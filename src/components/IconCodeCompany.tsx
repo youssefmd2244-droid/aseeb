@@ -340,14 +340,12 @@ export default function IconCodeCompany(props: IconCodeCompanyProps) {
               {/* Country 2: Saudi Arabia 🇸🇦 */}
               <div id="c-saudi" className="p-5 rounded-2xl bg-neutral-900/60 border border-neutral-800 shadow hover:border-aseeb-red/20 hover:scale-[1.02] transition-all flex items-center gap-4">
                 {/* Rotating flag holder */}
-                <motion.div
+                <div
                   id="flag-saudi-holder"
-                  animate={{ rotate: -360 }}
-                  transition={{ repeat: Infinity, duration: 18, ease: "linear" }}
                   className="w-14 h-14 rounded-full bg-neutral-800 flex items-center justify-center text-3xl shadow-inner select-none pointer-events-none"
                 >
                   🇸🇦
-                </motion.div>
+                </div>
                 <div className="font-sans">
                   <h4 className="font-bold text-aseeb-gold text-base">
                     {currentLang === "ar" ? "السعودية" : "Saudi Arabia"}
