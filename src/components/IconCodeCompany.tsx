@@ -2,9 +2,6 @@ import { Phone, MessageSquare, Code, Cpu, Award, Zap, Building, Heart, ArrowUpRi
 import { motion } from "motion/react";
 import { Translation, servicesList } from "../types";
 
-// Import real developer portraits
-import omarImg from "../assets/images/omar_sea_real.jpg";
-import youssefImg from "../assets/images/youssef_book_real.jpg";
 
 interface IconCodeCompanyProps {
   t: Translation;
@@ -18,7 +15,7 @@ export default function IconCodeCompany(props: IconCodeCompanyProps) {
   const companyStats = [
     { value: "2023", labelAr: "عام التأسيس", labelEn: "Founded Year" },
     { value: "100+", labelAr: "عملاء سعداء", labelEn: "Happy Clients" },
-    { value: "3+", labelAr: "دول ننشط بها", labelEn: "Active Countries" },
+    { value: "4+", labelAr: "دول ننشط بها", labelEn: "Active Countries" },
     { value: "150+", labelAr: "أنظمة برمجية", labelEn: "Built Platforms" }
   ];
 
@@ -95,31 +92,21 @@ export default function IconCodeCompany(props: IconCodeCompanyProps) {
             {/* Background Sadu Accent */}
             <div className="absolute top-0 right-0 left-0 h-1 bg-gradient-to-r from-aseeb-gold via-aseeb-red to-aseeb-gold opacity-60" />
             
-            {/* Youssef Photo Area - Glowing blinking spinning icon avatar */}
+            {/* Contact Icon Area */}
             <div className="flex-shrink-0 flex flex-col items-center justify-center">
               <div className="relative w-40 h-40 md:w-44 md:h-44 flex items-center justify-center">
-                {/* Spinning dashed glow ring */}
                 <motion.div
                   id="youssef-spin-ring"
                   animate={{ rotate: 360 }}
                   transition={{ repeat: Infinity, duration: 14, ease: "linear" }}
                   className="absolute inset-0 rounded-full border-2 border-dashed border-aseeb-gold/60 pointer-events-none"
                 />
-                {/* Blinking soft glow halo */}
                 <div className="absolute -inset-2 rounded-full bg-aseeb-gold/30 blur-xl animate-blink pointer-events-none" />
-
-                {/* Photo icon itself */}
-                <div className="relative w-[88%] h-[88%] rounded-full overflow-hidden border-2 border-aseeb-gold shadow-[0_0_25px_rgba(229,169,59,0.55)] animate-float">
-                  <img
-                    src={youssefImg}
-                    alt="Eng Youssef Mohamed holding a book"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    referrerPolicy="no-referrer"
-                  />
-                  {/* Book label overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-md px-1.5 py-1 text-[9px] text-center text-aseeb-gold font-sans font-bold leading-tight select-none z-10">
-                    📖 {currentLang === "ar" ? "كتاب: فن التفكير" : "The Art of Thinking"}
-                  </div>
+                <div className="relative w-[88%] h-[88%] rounded-full overflow-hidden border-2 border-aseeb-gold shadow-[0_0_25px_rgba(229,169,59,0.55)] animate-float bg-neutral-900 flex flex-col items-center justify-center gap-2 px-3">
+                  <Code className="w-8 h-8 text-aseeb-gold" />
+                  <span className="text-[10px] text-center text-aseeb-gold font-bold font-sans leading-tight whitespace-pre-line">
+                    {currentLang === "ar" ? "للتواصل مع\nفريق ICON Code" : "Contact\nICON Code Team"}
+                  </span>
                 </div>
               </div>
             </div>
@@ -128,18 +115,15 @@ export default function IconCodeCompany(props: IconCodeCompanyProps) {
             <div className="flex-grow flex flex-col justify-between space-y-4">
               <div className="space-y-1">
                 <span className="text-xs font-bold font-mono tracking-widest text-aseeb-gold uppercase">
-                  {currentLang === "ar" ? "رئيس مجلس الإدارة والمؤسس" : "Chairman & Founder"}
+                  {currentLang === "ar" ? "للتواصل مع فريق ICON Code" : "Contact ICON Code Team"}
                 </span>
-                <h3 className="text-2xl font-black text-white hover:text-aseeb-gold transition-colors duration-300 font-sans">
-                  {t.founderYoussef}
+                <h3 className="text-2xl font-black text-white font-sans">
+                  {currentLang === "ar" ? "فريق ICON Code" : "ICON Code Team"}
                 </h3>
-                <p className="text-xs text-[#fdfaf4]/45 italic font-mono uppercase">
-                  FOUNDER since 2023 AD
-                </p>
                 <p className="text-sm text-neutral-400 font-sans leading-relaxed pt-2">
                   {currentLang === "ar" 
-                    ? "مهندس برمجيات متخصص في تشييد الواجهات المتقدمة وخورازميات الويب، يقود الرؤية البرمجية الاستراتيجية لشركة آيكون كود منذ تأسيسها في عام ٢٠٢٣م." 
-                    : "Software pioneer specializing in structural frontend architectures and web algorithms. Leads the brand strategic blueprints at ICON Code."}
+                    ? "تواصل معنا مباشرةً عبر الاتصال أو واتساب للاستفسار عن خدماتنا البرمجية واحتياجاتك التقنية." 
+                    : "Reach out directly via call or WhatsApp to inquire about our technical services and software solutions."}
                 </p>
               </div>
 
@@ -181,31 +165,21 @@ export default function IconCodeCompany(props: IconCodeCompanyProps) {
             {/* Background Sadu Accent */}
             <div className="absolute top-0 right-0 left-0 h-1 bg-gradient-to-r from-aseeb-red via-aseeb-gold to-aseeb-red opacity-60" />
 
-            {/* Omar Photo Area - Glowing blinking spinning icon avatar */}
+            {/* Contact Icon Area */}
             <div className="flex-shrink-0 flex flex-col items-center justify-center">
               <div className="relative w-40 h-40 md:w-44 md:h-44 flex items-center justify-center">
-                {/* Spinning dashed glow ring */}
                 <motion.div
                   id="omar-spin-ring"
                   animate={{ rotate: -360 }}
                   transition={{ repeat: Infinity, duration: 14, ease: "linear" }}
                   className="absolute inset-0 rounded-full border-2 border-dashed border-[#0284c7]/60 pointer-events-none"
                 />
-                {/* Blinking soft glow halo */}
                 <div className="absolute -inset-2 rounded-full bg-[#0284c7]/30 blur-xl animate-blink pointer-events-none" />
-
-                {/* Photo icon itself */}
-                <div className="relative w-[88%] h-[88%] rounded-full overflow-hidden border-2 border-[#0284c7] shadow-[0_0_25px_rgba(2,132,199,0.55)] animate-float">
-                  <img
-                    src={omarImg}
-                    alt="Eng Omar Mohamed with ocean sunset backdrop"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    referrerPolicy="no-referrer"
-                  />
-                  {/* Sea label overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-md px-1.5 py-1 text-[9px] text-center text-[#0284c7] font-sans font-bold leading-tight select-none z-10">
-                    🌅 {currentLang === "ar" ? "إطلالة بحر إسطنبول" : "Istanbul Sea View"}
-                  </div>
+                <div className="relative w-[88%] h-[88%] rounded-full overflow-hidden border-2 border-[#0284c7] shadow-[0_0_25px_rgba(2,132,199,0.55)] animate-float bg-neutral-900 flex flex-col items-center justify-center gap-2 px-3">
+                  <Cpu className="w-8 h-8 text-[#0284c7]" />
+                  <span className="text-[10px] text-center text-[#0284c7] font-bold font-sans leading-tight whitespace-pre-line">
+                    {currentLang === "ar" ? "للتواصل مع\nفريق ICON Code" : "Contact\nICON Code Team"}
+                  </span>
                 </div>
               </div>
             </div>
@@ -214,18 +188,15 @@ export default function IconCodeCompany(props: IconCodeCompanyProps) {
             <div className="flex-grow flex flex-col justify-between space-y-4">
               <div className="space-y-1">
                 <span className="text-xs font-bold font-mono tracking-widest text-[#0284c7] uppercase">
-                  {currentLang === "ar" ? "الشريك التنفيذي وهندسة البرمجيات" : "Executive Partner & Principal Engineer"}
+                  {currentLang === "ar" ? "للتواصل مع فريق ICON Code" : "Contact ICON Code Team"}
                 </span>
-                <h3 className="text-2xl font-black text-white hover:text-[#0284c7] transition-colors duration-300 font-sans">
-                  {t.founderOmar}
+                <h3 className="text-2xl font-black text-white font-sans">
+                  {currentLang === "ar" ? "فريق ICON Code" : "ICON Code Team"}
                 </h3>
-                <p className="text-xs text-[#0284c7]/75 italic font-mono uppercase">
-                  PARTNER since 2023 AD
-                </p>
                 <p className="text-sm text-neutral-400 font-sans leading-relaxed pt-2">
                   {currentLang === "ar" 
-                    ? "مهندس النظم والشبكات والبرمجة الخلفية العميقة، يبرع في تصميم خواديم قواعد البيانات المعقدة وتشييد الجسور والأنظمة المعمارية السحرية." 
-                    : "Systems software engineer, specialized in cloud architectures and core databases. Builder of highly secure cashier systems."}
+                    ? "تواصل معنا مباشرةً عبر الاتصال أو واتساب للاستفسار عن خدماتنا البرمجية واحتياجاتك التقنية." 
+                    : "Reach out directly via call or WhatsApp to inquire about our technical services and software solutions."}
                 </p>
               </div>
 
@@ -343,7 +314,7 @@ export default function IconCodeCompany(props: IconCodeCompanyProps) {
             </div>
 
             {/* Countries with animated/rotating flag designs */}
-            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               
               {/* Country 1: Egypt 🇪🇬 */}
               <div id="c-egypt" className="p-5 rounded-2xl bg-neutral-900/60 border border-neutral-800 shadow hover:border-aseeb-gold/20 hover:scale-[1.02] transition-all flex items-center gap-4">
@@ -404,6 +375,27 @@ export default function IconCodeCompany(props: IconCodeCompanyProps) {
                   </h4>
                   <p className="text-[10px] md:text-xs text-neutral-400 mt-0.5 leading-snug">
                     {currentLang === "ar" ? "متاجر إلكترونية وتقنيات دبي الرقمية" : "Dubai digital shops & apparel platforms"}
+                  </p>
+                </div>
+              </div>
+
+              {/* Country 4: Greece 🇬🇷 */}
+              <div id="c-greece" className="p-5 rounded-2xl bg-neutral-900/60 border border-neutral-800 shadow hover:border-[#1d4ed8]/20 hover:scale-[1.02] transition-all flex items-center gap-4">
+                {/* Rotating flag holder */}
+                <motion.div
+                  id="flag-greece-holder"
+                  animate={{ rotate: -360 }}
+                  transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+                  className="w-14 h-14 rounded-full bg-neutral-800 flex items-center justify-center text-3xl shadow-inner select-none pointer-events-none"
+                >
+                  🇬🇷
+                </motion.div>
+                <div className="font-sans">
+                  <h4 className="font-bold text-white text-base">
+                    {currentLang === "ar" ? "اليونان" : "Greece"}
+                  </h4>
+                  <p className="text-[10px] md:text-xs text-neutral-400 mt-0.5 leading-snug">
+                    {currentLang === "ar" ? "مشاريع برمجية وأنظمة رقمية باليونان" : "Software projects & digital systems in Greece"}
                   </p>
                 </div>
               </div>
